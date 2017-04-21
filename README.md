@@ -21,13 +21,13 @@ const DIST_DIR = path.join(__dirname, '../dist')
 const CLIENT_DIR = path.join(__dirname, '../src')
 
 module.exports = {
-    context: CONTEXT_DIR,
-    entry: ['./src/index.js],
-  	output: {
-  		path: DIST_DIR,
-  		filename: '[name].[hash].js',
-  		publicPath: '/'
-  	}
+  context: CONTEXT_DIR,
+  entry: ['./src/index.js'],
+  output: {
+    path: DIST_DIR,
+    filename: '[name].[hash].js',
+    publicPath: '/'
+  }
 }
 ```
 <font color="#666">
@@ -49,33 +49,33 @@ module.exports = {
   ...
   module: [
     rules: [{
-		    test: /\.html$/,
-		    exclude: /node_modules/,
-		    use: 'html-loader'
-		},
-		{
-			test: /\.js$/,
-			exclude: /node_modules/,
-			include: [resolve('src')],
-			use: 'babel-loader'
-		},
-		{
-			test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-			loader: 'url-loader',
-			query: {
-				limit: 10000,
-				name: utils.assetsPath('img/[name].[hash:7].[ext]')
-			}
-		},
-		{
-			test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-			loader: 'url-loader',
-			query: {
-				limit: 10000,
-				name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-			}
-		}
-		]
+      test: /\.html$/,
+      exclude: /node_modules/,
+      use: 'html-loader'
+    },
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      include: [resolve('src')],
+      use: 'babel-loader'
+    },
+    {
+      test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 10000,
+        name: utils.assetsPath('img/[name].[hash:7].[ext]')
+      }
+    },
+    {
+      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 10000,
+        name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+      }
+    }
+    ]
   ]
 }
 ```
@@ -86,7 +86,7 @@ use是定义我们用什么来插件来解析这个文件
 resolve是一个函数
 ```javascript
 function resolve(dir) {
-	return path.join(__dirname, '..', dir)
+    return path.join(__dirname, '..', dir)
 }
 ```
 - utils是一个单独的文件
@@ -163,29 +163,29 @@ module.exports = merge(baseConfig, {
 ```javascript
 module.exports = merge(baseConfig, {
     ...
-	module: {
-		rules: [
-			{
-				test: /\.scss$/,
-				exclude: /node_modules/,
-				use: ['style-loader' ,'css-loader', 'postcss-loader','sass-loader']
-			}
-		]
-	},
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                use: ['style-loader' ,'css-loader', 'postcss-loader','sass-loader']
+            }
+        ]
+    },
 }
 ```
 - 下面要实现热加载需要创建HotModuleReplacementPlugin
 ```javascript
 module.exports = merge(baseConfig, {
-	plugins: [
-		new webpack.DefinePlugin({
+    plugins: [
+        new webpack.DefinePlugin({
             'process.env': 'development'
         }),
-		new webpack.optimize.OccurrenceOrderPlugin(),//排序输出文件
-		new webpack.HotModuleReplacementPlugin(),//热加载
-		new webpack.NoEmitOnErrorsPlugin(),
-		new FriendlyErrorsPlugin()
-	]
+        new webpack.optimize.OccurrenceOrderPlugin(),//排序输出文件
+        new webpack.HotModuleReplacementPlugin(),//热加载
+        new webpack.NoEmitOnErrorsPlugin(),
+        new FriendlyErrorsPlugin()
+    ]
 })
 ```
 
@@ -202,9 +202,9 @@ const webpackConfig = require('./webpack.dev.conf')
 
 // 用express创建服务，DIST_DIR之前我们output里面是输出到dist目录，所以这里也用这个目录实现文件实时响应地址
 const app = express(),
-	  DIST_DIR = path.join(__dirname, '../dist'),
-	  PORT = 3000,
-	  compiler = webpack(webpackConfig)
+      DIST_DIR = path.join(__dirname, '../dist'),
+      PORT = 3000,
+      compiler = webpack(webpackConfig)
 //compiler是webpack环境
 ```
 
@@ -212,15 +212,15 @@ const app = express(),
 ```javascript
 //具体参数信息看文档说明
 const devMiddleware = webpackDevMiddleware(compiler, {
-	publicPath: webpackConfig.output.publicPath,
-	quiet: true,
-	noInfo: true,
-	stats: {
-		colors: true
-	}
+    publicPath: webpackConfig.output.publicPath,
+    quiet: true,
+    noInfo: true,
+    stats: {
+        colors: true
+    }
 })
 const hotMiddleware = webpackHotMiddleware(compiler, {
-	log: () => {}
+    log: () => {}
 })
 
 app.use(devMiddleware)
@@ -233,21 +233,21 @@ app.use(hotMiddleware)
 ```javascript
 //把地址get请求返回dist目录下的index.html
 app.get('*', (req, res, next) => {
-	const filename = path.join(DIST_DIR, 'index.html')
+    const filename = path.join(DIST_DIR, 'index.html')
 
-	compiler.outputFileSystem.readFile(filename, (err, result) => {
-		if (err) {
-			return next(err)
-		}
-		res.set('content-type', 'text/html')
-		res.send(result)
-		res.end()
-	})
+    compiler.outputFileSystem.readFile(filename, (err, result) => {
+        if (err) {
+            return next(err)
+        }
+        res.set('content-type', 'text/html')
+        res.send(result)
+        res.end()
+    })
 })
 
 //最后listen
 app.listen(PORT, () => {
-	console.log(`Your server is running at localhost:${PORT}`)
+    console.log(`Your server is running at localhost:${PORT}`)
 })
 ```
 #### 开发环境的配置到此就搭建完成了
