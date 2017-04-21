@@ -17,6 +17,7 @@ const app = express(),
 const devMiddleware = webpackDevMiddleware(compiler, {
 	publicPath: webpackConfig.output.publicPath,
 	quiet: true,
+	noInfo: true,
 	stats: {
 		colors: true
 	}

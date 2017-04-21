@@ -1,0 +1,20 @@
+{
+	// presets：你想用编译哪些语法
+	// latest和stage-2都代表一个版本
+	"presets": [
+		["latest", {
+			"es2015": {
+				"modules": false
+			}
+		}],
+		"stage-2"
+	],
+	"plugins": ["transform-runtime"],
+	"comments": false
+	// "env": {
+	// 	"test": {
+	// 		"presets": ["latest", "stage-2"],
+	// 		"plugins": ["istanbul"]
+	// 	}
+	// }
+}

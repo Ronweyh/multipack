@@ -1,3 +1,5 @@
+// 为单页应用使用，html不会热加载
+
 require('eventsource-polyfill')
 var hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true')
 

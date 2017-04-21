@@ -1,16 +1,21 @@
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const pathConfig = require('./config').pathSetting
+const utils = require('./utils')
 
 
 const DIST_DIR = path.join(__dirname, '../dist')
 const CLIENT_DIR = path.join(__dirname, '../src')
 
+
+function resolve(dir) {
+	return path.join(__dirname, '..', dir)
+}
+
 const config = {
 	context: CLIENT_DIR,
-	entry: ['../src/register/index.js']
-	,
+	entry: pathConfig.entry,
 	output: {
 		path: DIST_DIR,
 		// filename: '[name].js',
@@ -19,7 +24,7 @@ const config = {
 	},
 	// devtool: 'inline-source-map',
 	module: {
-		rules: [{
+		rules: [ {
 				test: /\.html$/,
 				exclude: /node_modules/,
 				use: 'html-loader'
@@ -27,34 +32,23 @@ const config = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
+				include: [resolve('src')],
 				use: 'babel-loader'
 			},
 			{
-				test: /\.scss$/,
-				exclude: /node_modules/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader', 'sass-loader']
-				})
-			},
-			{
-				test: /\.(jpg|png|gif)$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						limit: 100000
-					}
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				loader: 'url-loader',
+				query: {
+					limit: 10000,
+					name: utils.assetsPath('img/[name].[hash:7].[ext]')
 				}
 			},
 			{
-				test: /\.(woff|woff2|eot|ttf|svg)$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'url-loader',
-					options: {
-						limit: 100000
-					}
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+				loader: 'url-loader',
+				query: {
+					limit: 10000,
+					name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
 				}
 			}
 		]
@@ -70,11 +64,11 @@ const config = {
 			filename: 'index.html',
 			template: '../src/register/register.html'
 		}),
-		new ExtractTextPlugin({
-			filename: 'bundle.css',
-			allChunks: true,
-			disable: true
-		})
+		// new ExtractTextPlugin({
+		// 	filename: 'bundle.css',
+		// 	allChunks: true,
+		// 	disable: true
+		// })
 	]
 }
 
