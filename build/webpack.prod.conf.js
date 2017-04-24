@@ -38,7 +38,7 @@ module.exports = merge(baseConfig, {
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			template: '../src/register/register.html'
+			template: `../src/${config.build.publicPath}/index.html`
 		}),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {

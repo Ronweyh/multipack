@@ -1,9 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-const pathConfig = require('./config').pathSetting
 const utils = require('./utils')
 
+const config = require('./config')
 
 const DIST_DIR = path.join(__dirname, '../dist')
 const CLIENT_DIR = path.join(__dirname, '../src')
@@ -13,9 +13,9 @@ function resolve(dir) {
 	return path.join(__dirname, '..', dir)
 }
 
-const config = {
+module.exports = {
 	context: CLIENT_DIR,
-	entry: pathConfig.entry,
+	entry: config.pathSetting.entry,
 	output: {
 		path: DIST_DIR,
 		// filename: '[name].js',
@@ -62,7 +62,7 @@ const config = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			template: '../src/register/register.html'
+			template: `../src/${config.build.publicPath}/index.html`
 		}),
 		// new ExtractTextPlugin({
 		// 	filename: 'bundle.css',
@@ -71,6 +71,3 @@ const config = {
 		// })
 	]
 }
-
-
-module.exports = config

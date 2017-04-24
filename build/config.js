@@ -1,5 +1,5 @@
 const path = require('path')
-const publicPath = 'register'
+const publicPath = 'riskinfo'
 
 
 module.exports = {
@@ -7,11 +7,11 @@ module.exports = {
 		publicPath: publicPath,
 		env: '"production"',
 		assetsSubDirectory: 'static',
-		outputPath: '../dist/register/'
+		outputPath: `../dist/${publicPath}/`
 	},
 	dev: {
 		env: '"development"',
-		port: 5000,
+		port: 3000,
 		// autoOpenBrowser: false,
 		assetsSubDirectory: 'static',
 		// assetsPublicPath: '/',
@@ -24,6 +24,6 @@ module.exports = {
 		cssSourceMap: false
 	},
 	pathSetting: {
-		entry: ['../src/register/index.js']
+		entry: [`../src/${publicPath}/index.js`]
 	}
 }
