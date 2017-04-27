@@ -60,10 +60,10 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new HtmlWebpackPlugin({
-			filename: 'index.html',
-			template: `../src/${config.build.publicPath}/index.html`
-		}),
+		// new HtmlWebpackPlugin({
+		// 	filename: 'index.html',
+		// 	template: `../src/${config.build.publicPath}/index.html`
+		// }),
 		// new ExtractTextPlugin({
 		// 	filename: 'bundle.css',
 		// 	allChunks: true,
