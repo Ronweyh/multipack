@@ -56,7 +56,6 @@ module.exports = merge(baseConfig, {
 			name: 'vendor',
             // chunks: ['register', 'riskinfo'],//在哪些入口中提取公共模块
 			minChunks: function (module, count) {
-				// any required modules inside node_modules are extracted to vendor
 				return (
 					module.resource &&
 					/\.js$/.test(module.resource) &&

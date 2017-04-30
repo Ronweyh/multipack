@@ -10,7 +10,6 @@ module.exports = {
 		publicPath: '/',
 		env: '"production"',
 		assetsSubDirectory: 'static',
-		outputPath: `../dist/${publicPath}/`
 	},
 	dev: {
 		env: '"development"',
@@ -25,9 +24,6 @@ module.exports = {
 			}
 		},
 		cssSourceMap: false
-	},
-	pathSetting: {
-		entry: [`../src/${publicPath}/index.js`]
 	},
     multiPage: {
         entry: {

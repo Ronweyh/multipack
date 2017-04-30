@@ -15,7 +15,7 @@ function resolve(dir) {
 
 module.exports = {
 	context: CLIENT_DIR,
-	entry: config.pathSetting.entry,
+	entry: config.multiPage.entry,
 	output: {
 		path: DIST_DIR,
 		// filename: '[name].js',

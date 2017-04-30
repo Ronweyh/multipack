@@ -36,24 +36,24 @@ Object.keys(proxyTable).forEach((context) => {
 	app.use(proxyMiddleware(options.filter || context, options))
 })
 // 当修改html时，让服务器重载
-compiler.plugin('compilation', (compilation) => {
-    compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-        hotMiddleware.publish({
-            action: 'reload'
-        })
-        cb()
-    })
-})
-
-// html5 history fallback
-app.use(require('connect-history-api-fallback')())
+// compiler.plugin('compilation', (compilation) => {
+//     compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+//         hotMiddleware.publish({
+//             action: 'reload'
+//         })
+//         cb()
+//     })
+// })
 
 app.use(devMiddleware)
 
 app.use(hotMiddleware)
 
-app.get('*', (req, res, next) => {
-	const filename = path.join(DIST_DIR, 'index.html')
+app.get('/:name', (req, res, next) => {
+    // console.dir(req.params)
+    let name = req.params.name ? req.params.name + '.html' : 'index.html';
+    // console.dir(name)
+	const filename = path.join(compiler.outputPath, name)
 	// console.log(filename)
 
 	compiler.outputFileSystem.readFile(filename, (err, result) => {
