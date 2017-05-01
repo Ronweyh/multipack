@@ -51,7 +51,7 @@ function multiEntry(entrys) {
 function setEntry(entrys) {
     let obj = {}
     for (var entry in entrys) {
-        obj[entry] = [ 'webpack-hot-middleware/client', entrys[entry]]
+        obj[entry] = [ 'webpack-hot-middleware/client?noInfo=true', entrys[entry]]
     }
     return obj;
 }
