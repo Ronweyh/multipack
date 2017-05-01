@@ -7,16 +7,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const config = require('./config')
 const baseConfig = require('./webpack.base.conf')
 
+let minChunks = 0;
+let htmlOutPut = multiEntry(baseConfig.entry)
+
 baseConfig.entry = config.multiPage.entry
 baseConfig.output = {
 	path: path.resolve(__dirname,'../dist'),
 	// 把js、css放在static目录下
     filename: 'static/js/[name].[chunkhash].js',
-    chunkFilename: 'static/js/[id].chunk.js',
+    chunkFilename: 'static/js/[id].[chunkhash].js',
 	// 公共路径前面放上不同页面的地址
 	publicPath: `/`
 }
-let htmlOutPut = multiEntry(baseConfig.entry)
+
 module.exports = merge(baseConfig, {
 	module: {
 		rules: [
@@ -47,7 +50,7 @@ module.exports = merge(baseConfig, {
 		new ExtractTextPlugin('static/css/[name].[contenthash].css'),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
-			minChunks: function (module, count) {
+            minChunks: !config.build.bundleAllChunks ? minChunks : function (module, count) {
 				return (
 					module.resource &&
 					/\.js$/.test(module.resource) &&
@@ -72,6 +75,7 @@ function multiEntry(entrys) {
     */
     let arr = [];
     for (var key in entrys) {
+        minChunks++;
         let newHtml = new HtmlWebpackPlugin({
             filename: `${key}/index.html`,
             template: `../src/${key}/index.html`,
