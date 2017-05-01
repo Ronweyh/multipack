@@ -11,10 +11,6 @@ baseConfig.entry = setEntry(config.multiPage.entry)
 
 module.exports = merge(baseConfig, {
 	devtool: '#cheap-module-eval-source-map',
-	// entry: {
-    //     HMR: 'webpack-hot-middleware/client'
-    // },
-    // entry: [ 'webpack-hot-middleware/client' ],
 	module: {
 		rules: [
 			{
@@ -38,15 +34,14 @@ module.exports = merge(baseConfig, {
 
 function multiEntry(entrys) {
     /*
-        1. 每一个文件要引入的js有三个，两个公共chunk，一个自身js
-        2. 输出的时候也是根据各自的名字，输出对应的文件夹
-        3. template模板取自对应key目录文件下html
+        1. 开发环境下的chunks只需要引入自身的js
     */
     let arr = [];
     for (var key in entrys) {
         let newHtml = new HtmlWebpackPlugin({
             filename: `${key}.html`,
-            template: `../src/${key}/index.html`
+            template: `../src/${key}/index.html`,
+            chunks: [key]
         })
         arr.push(newHtml);
     }

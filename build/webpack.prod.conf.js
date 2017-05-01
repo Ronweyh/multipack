@@ -13,8 +13,6 @@ baseConfig.output = {
 	// 把js、css放在static目录下
     filename: 'static/js/[name].[chunkhash].js',
     chunkFilename: 'static/js/[id].chunk.js',
-	// filename: path.posix.join('static','[name].[chunkhash].js'),
-	// publicPath: `/${config.build.basicPath}/static/`
 	// 公共路径前面放上不同页面的地址
 	publicPath: `/`
 }
@@ -38,10 +36,6 @@ module.exports = merge(baseConfig, {
 				"NODE_ENV": config.build.env
 			}
 		}),
-		// new HtmlWebpackPlugin({
-		// 	filename: 'index.html',
-		// 	template: `../src/${config.build.publicPath}/index.html`
-		// }),
         ...htmlOutPut,
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
@@ -50,11 +44,9 @@ module.exports = merge(baseConfig, {
 			//源码false
 			sourceMap: false
 		}),
-		// new ExtractTextPlugin(path.posix.join('static','[name].[contenthash].css')),
 		new ExtractTextPlugin('static/css/[name].[contenthash].css'),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
-            // chunks: ['register', 'riskinfo'],//在哪些入口中提取公共模块
 			minChunks: function (module, count) {
 				return (
 					module.resource &&

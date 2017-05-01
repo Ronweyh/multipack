@@ -50,11 +50,8 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 app.get('/:name', (req, res, next) => {
-    // console.dir(req.params)
     let name = req.params.name ? req.params.name + '.html' : 'index.html';
-    // console.dir(name)
 	const filename = path.join(compiler.outputPath, name)
-	// console.log(filename)
 
 	compiler.outputFileSystem.readFile(filename, (err, result) => {
 		if (err) {
