@@ -35,15 +35,6 @@ Object.keys(proxyTable).forEach((context) => {
 	}
 	app.use(proxyMiddleware(options.filter || context, options))
 })
-// 当修改html时，让服务器重载
-// compiler.plugin('compilation', (compilation) => {
-//     compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-//         hotMiddleware.publish({
-//             action: 'reload'
-//         })
-//         cb()
-//     })
-// })
 
 app.use(devMiddleware)
 

@@ -17,9 +17,7 @@ module.exports = {
 	dev: {
 		env: '"development"',
 		port: 3000,
-		// autoOpenBrowser: false,
 		assetsSubDirectory: 'static',
-		// assetsPublicPath: '/',
 		proxyTable: {
 			"/rdi": {
 				target: 'http://192.168.10.68:8082/x9Rdi',
