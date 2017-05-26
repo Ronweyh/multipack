@@ -19,7 +19,7 @@ module.exports = {
 	output: {
 		path: DIST_DIR,
 		// filename: '[name].js',
-		filename: '[name].[hash].js',
+		filename: '[name].js',
 		publicPath: '/'
 	},
 	// devtool: 'inline-source-map',
@@ -56,18 +56,8 @@ module.exports = {
 	resolve: {
 		extensions: [' ', '.js', '.jsx', 'json'],
 		alias: {
-			src: path.resolve(__dirname, '../src')
-		}
-	},
-	plugins: [
-		// new HtmlWebpackPlugin({
-		// 	filename: 'index.html',
-		// 	template: `../src/${config.build.publicPath}/index.html`
-		// }),
-		// new ExtractTextPlugin({
-		// 	filename: 'bundle.css',
-		// 	allChunks: true,
-		// 	disable: true
-		// })
-	]
+			'src': path.resolve(__dirname, '../src'),
+            'vue': 'vue/dist/vue.js',
+        }
+	}
 }

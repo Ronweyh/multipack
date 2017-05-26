@@ -35,23 +35,36 @@ Object.keys(proxyTable).forEach((context) => {
 	}
 	app.use(proxyMiddleware(options.filter || context, options))
 })
+// 当修改html时，让服务器重载
+// compiler.plugin('compilation', (compilation) => {
+//     compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+//         hotMiddleware.publish({
+//             action: 'reload'
+//         })
+//         cb()
+//     })
+// })
 
 app.use(devMiddleware)
 
 app.use(hotMiddleware)
 
 app.get('/:name', (req, res, next) => {
-    let name = req.params.name ? req.params.name + '.html' : 'index.html';
-	const filename = path.join(compiler.outputPath, name)
-
-	compiler.outputFileSystem.readFile(filename, (err, result) => {
-		if (err) {
-			return next(err)
-		}
-		res.set('content-type', 'text/html')
-		res.send(result)
-		res.end()
-	})
+    let name,filename;
+    // console.log(req.params.name)
+    if (req.params.name.indexOf('favicon') == -1 && req.params.name.indexOf('.map') == -1) {
+    // if (req.params.name.indexOf('favicon') == -1) {
+        name = req.params.name ? req.params.name + '.html' : 'index.html';
+	    filename = path.join(compiler.outputPath, name)
+        compiler.outputFileSystem.readFile(filename, (err, result) => {
+            if (err) {
+                return next(err)
+            }
+            res.set('content-type', 'text/html')
+            res.send(result)
+            res.end()
+        })
+    }
 })
 
 app.listen(PORT, () => {

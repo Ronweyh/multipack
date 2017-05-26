@@ -10,13 +10,17 @@ let htmlOutPut = multiEntry(config.multiPage.entry)
 baseConfig.entry = setEntry(config.multiPage.entry)
 
 module.exports = merge(baseConfig, {
-	devtool: '#cheap-module-eval-source-map',
+	devtool: '#source-map',
 	module: {
 		rules: [
 			{
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: ['style-loader' ,'css-loader', 'postcss-loader','sass-loader']
+			},
+            {
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader', 'postcss-loader']
 			}
 		]
 	},
