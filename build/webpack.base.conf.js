@@ -24,11 +24,7 @@ module.exports = {
 	},
 	// devtool: 'inline-source-map',
 	module: {
-		rules: [ {
-				test: /\.html$/,
-				exclude: /node_modules/,
-				use: 'html-loader'
-			},
+		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
