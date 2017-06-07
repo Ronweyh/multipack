@@ -26,6 +26,12 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.html$/,
+				exclude: /node_modules/,
+				include: [resolve('src')],
+				use: 'html-loader'
+			},
+			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				include: [resolve('src')],
