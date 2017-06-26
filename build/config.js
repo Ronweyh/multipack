@@ -28,8 +28,7 @@ module.exports = {
 	},
     multiPage: {
         entry: {
-            register: '../src/register/index.js',
-            riskinfo: '../src/riskinfo/index.js'
+            // 自动生成入口文件，路径为src下directory下的index.js
         }
     }
 }

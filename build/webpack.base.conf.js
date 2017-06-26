@@ -2,12 +2,18 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const utils = require('./utils')
+const fs = require('fs')
 
 const config = require('./config')
 
 const DIST_DIR = path.join(__dirname, '../dist')
 const CLIENT_DIR = path.join(__dirname, '../src')
 
+let appEntry = {}
+
+fs.readdirSync(CLIENT_DIR).forEach((file) => {
+    appEntry[file] = `../src/${file}/index.js`
+})
 
 function resolve(dir) {
 	return path.join(__dirname, '..', dir)
@@ -15,7 +21,7 @@ function resolve(dir) {
 
 module.exports = {
 	context: CLIENT_DIR,
-	entry: config.multiPage.entry,
+	entry: appEntry,
 	output: {
 		path: DIST_DIR,
 		// filename: '[name].js',
