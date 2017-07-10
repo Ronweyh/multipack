@@ -10,7 +10,6 @@ const baseConfig = require('./webpack.base.conf')
 let minChunks = 0;
 let htmlOutPut = multiEntry(baseConfig.entry)
 
-baseConfig.entry = config.multiPage.entry
 baseConfig.output = {
 	path: path.resolve(__dirname,'../dist'),
 	// 把js、css放在static目录下

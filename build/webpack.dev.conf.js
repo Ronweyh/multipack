@@ -6,8 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const baseConfig = require('./webpack.base.conf')
 const config = require('./config')
 
-let htmlOutPut = multiEntry(config.multiPage.entry)
-baseConfig.entry = setEntry(config.multiPage.entry)
+let htmlOutPut = multiEntry(baseConfig.entry)
+baseConfig.entry = setEntry(baseConfig.entry)
 
 module.exports = merge(baseConfig, {
 	devtool: '#source-map',
